@@ -38,6 +38,9 @@ Check whats running for you:
 Check where your jobs are running:
 >squeue -u $USER -o "%i %Z"
 
+See how a job is running in realtime:
+> tail -f slurm_output_file
+
 ## UAHPC Partitions:
 
 Useful commands if you know what you are doing:
@@ -48,14 +51,13 @@ Useful commands if you know what you are doing:
 Note that sinfo will show you the wrong memory for the partitions due to the nature of how nodes are distributed on UAHPC.
 
 ## Here is what you need to know:
-
-| Partition Name: | Nodes: | Cores: | Memory:                                       |
-|-----------------|--------|--------|-----------------------------------------------|
-| long            | 8      | 192    | 768GB                                         |
-| threaded        | 2      | 80     | 5376GB (Technically infinite)                 |
-| loko            | 1      | 16     | 1TB                                           |
-| highmem         | 2      | 32     | 768 (Technically much more, depending on use) |
-| ultrahigh       | 3      | 142    | 3.072TB                                       |
+| Partition Name: | Nodes: | Cores: | Memory:                                       | Walltime:  |
+|-----------------|--------|--------|-----------------------------------------------|------------|
+| long            | 8      | 192    | 768GB                                         | 7-00:00:00 |
+| threaded        | 2      | 80     | 5376GB (Technically infinite)                 | 48:00:00   |
+| loko            | 1      | 16     | 1TB                                           | Infinite   |
+| highmem         | 2      | 32     | 768 (Technically much more, depending on use) | Infinite   |
+| ultrahigh       | 3      | 142    | 3.072TB                                       | Infinite   |
 
 However it is a bit more nuanced: 
 If you use
@@ -78,39 +80,80 @@ Will allocateb the right memory per core. If your program requires a per core me
 
 ## SBATCH Script Setup:
 >#!/bin/bash
->#SBATCH --job-name=job_name_here
->#SBATCH -n 1 #tasks <br/>
->#SBATCH -N 1 #nodes <br/>
->#SBATCH -c #cores here <br/>
->#SBATCH --mem=memory goes here ex: 127G <br/>
->#SBATCH -o slurm_output-job_name.%J <br/>
->#SBATCH -e slurm_error-job_name.%J <br/>
->#SBATCH -p partition <br/>
->#SBATCH -q qos <br/>
+>#SBATCH --job-name=**job_name_here**
+>#SBATCH -n **1** #tasks <br/>
+>#SBATCH -N **1** #nodes <br/>
+>#SBATCH -c **1** #cores here <br/>
+>#SBATCH --mem=**memory** goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-**job_name**.%J <br/>
+>#SBATCH -e slurm_error-**job_name.**%J <br/>
+>#SBATCH -p **partition** <br/>
+>#SBATCH -q **qos** <br/>
 >#SBATCH --mail-type=ALL <br/>
->#SBATCH --mail-user=your_email@email_adress.com <br/>
+>#SBATCH --mail-user=**your_email@email_adress.com** <br/>
 
 This actually varies per partition and even per qos as some partitions do not have a qos (quality of service).
 ### Example for loko:
 >#!/bin/bash
 >#SBATCH --job-name=**job_name_here**
->#SBATCH -n 1 #tasks <br/>
->#SBATCH -N 1 #nodes <br/>
->#SBATCH -c #cores here <br/>
->#SBATCH --mem=memory goes here ex: 127G <br/>
->#SBATCH -o slurm_output-job_name.%J <br/>
->#SBATCH -e slurm_error-job_name.%J <br/>
->#SBATCH -p loko <br/>
->#SBATCH -q qos <br/>
+>#SBATCH -n **1** #tasks <br/>
+>#SBATCH -N **1** #nodes <br/>
+>#SBATCH -c **1** #cores here <br/>
+>#SBATCH --mem=**memory** goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-**job_name**.%J <br/>
+>#SBATCH -e slurm_error-**job_name.**%J <br/>
+>#SBATCH -p ultrahigh <br/>
+>#SBATCH -q loko <br/>
+>#SBATCH -A loko_grp <br/>
 >#SBATCH --mail-type=ALL <br/>
->#SBATCH --mail-user=your_email@email_adress.com <br/>
+>#SBATCH --mail-user=**your_email@email_adress.com** <br/>
+
 ### Example for threaded:
+>#!/bin/bash
+>#SBATCH --job-name=**job_name_here**
+>#SBATCH -n **1** #tasks <br/>
+>#SBATCH -N **1** #nodes <br/>
+>#SBATCH -c **1** #cores here <br/>
+>#SBATCH --mem=**memory** goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-**job_name**.%J <br/>
+>#SBATCH -e slurm_error-**job_name.**%J <br/>
+>#SBATCH -p threaded <br/>
+>#SBATCH -q threaded <br/>
+>#SBATCH --mail-type=ALL <br/>
+>#SBATCH --mail-user=**your_email@email_adress.com** <br/>
 
 ### Example for long:
-
-### Example for highmem:
+>#!/bin/bash
+>#SBATCH --job-name=**job_name_here**
+>#SBATCH -n **1** #tasks <br/>
+>#SBATCH -N **1** #nodes <br/>
+>#SBATCH -c **1** #cores here <br/>
+>#SBATCH --mem=**memory** goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-**job_name**.%J <br/>
+>#SBATCH -e slurm_error-**job_name.**%J <br/>
+>#SBATCH -p long <br/>
+>#SBATCH -q long <br/>
+>#SBATCH --mail-type=ALL <br/>
+>#SBATCH --mail-user=**your_email@email_adress.com** <br/>
 
 ### Example for ultrahigh:
+>#!/bin/bash
+>#SBATCH --job-name=**job_name_here**
+>#SBATCH -n **1** #tasks <br/>
+>#SBATCH -N **1** #nodes <br/>
+>#SBATCH -c **1** #cores here <br/>
+>#SBATCH --mem=**memory** goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-**job_name**.%J <br/>
+>#SBATCH -e slurm_error-**job_name.**%J <br/>
+>#SBATCH -p ultrahigh <br/>
+>#SBATCH --mail-type=ALL <br/>
+>#SBATCH --mail-user=**your_email@email_adress.com** <br/>
 
+## Addtional SBATCH script options:
+>#SBATCH -t #Allows you to set a time limit for a job <br/>
+>#SBATCH -test-only #Validates your batch script to see if it would run with the specified mem and cores or other options
+>#SBATCH -x #exclude certain nodes from running the job (if certain past nodes have given problems)
+>#SBATCH --mem-per-cpu= #Set the memory per cpu 
+>#SBATCH --kill-on-invalid-dep #Kills the job if a dependency is invalid (often doesnt work but can stop a job from sitting idle
 
 
