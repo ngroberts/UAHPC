@@ -1,10 +1,10 @@
-# Useful Commands for the Kmkocot Usergrp:
+# Useful Commands for the Kmkocot Usergrp on UAHPC:
 
 ## Group ID and Group Ownership
 
 Check groups you belong to:
 >id -Gn
-HAHAH
+
 Check ownership of files in a folder:
 >ls -la
 
@@ -16,10 +16,28 @@ Check ownership of files in a folder:
 
 If a file is on users it both cannot be edited by kmkocot users and takes up memory thats not allocated to kmkocot.
 You need to change this with.
->chgrp kmkocot FILENAME
+>chgrp kmkocot file_name_here
 
 or recursively (a folder and all its contents with)
->chrgrp -R kmkocot FOLDERNAME
+>chrgrp -R kmkocot folder_name_here
 
 If you login and notice that files you create belong to users type:
 >newgrp - kmkocot 
+
+Check storage quota on /grps2/kmk/
+>quota -sg kmkocot
+
+## Running jobs:
+
+Check the queue for any partition:
+>squeue -p partition_name_here
+
+for example:
+>squeue -p long
+
+diplays
+
+>   JOBID PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON) <br/>
+           1715340      long RI_cupcf  asoyemi  R 2-12:10:02      1 compute-5-12
+
+
