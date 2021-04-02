@@ -61,7 +61,56 @@ However it is a bit more nuanced:
 If you use
 >sacctmgr show qos 
 
-You will see that THREADED has a MAXTRES of 16 which means that per job there are only 16 available cores however you can run up to four jobs in parrallel.
-16 Cores per Job. 
+You will see that THREADED has a MAXTRES of 16and MXTRESPU 48  which means that per job there are only 16 available cores however you can run up to four jobs in parrallel with max per user CPU amount of 48.
+16 Cores per job with 48 cores per user.
 
-As well you will see using 
+As well you will see using: 
+>scontrol show partition 
+
+that per core most partitions have a memory limit of 0.25GB per core. This limit will often be appplied! Without you even knowing!
+You can override this by adding:
+>#SBATCH --mem-per-cpu=64G
+
+However allocating a mem amount with:
+>#SBATCH --mem=1000G 
+
+Will allocateb the right memory per core. If your program requires a per core memory of a certain amount please make sure you are allocating it. 
+
+## SBATCH Script Setup:
+>#!/bin/bash
+>#SBATCH --job-name=job_name_here
+>#SBATCH -n 1 #tasks <br/>
+>#SBATCH -N 1 #nodes <br/>
+>#SBATCH -c #cores here <br/>
+>#SBATCH --mem=memory goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-job_name.%J <br/>
+>#SBATCH -e slurm_error-job_name.%J <br/>
+>#SBATCH -p partition <br/>
+>#SBATCH -q qos <br/>
+>#SBATCH --mail-type=ALL <br/>
+>#SBATCH --mail-user=your_email@email_adress.com <br/>
+
+This actually varies per partition and even per qos as some partitions do not have a qos (quality of service).
+### Example for loko:
+>#!/bin/bash
+>#SBATCH --job-name=**job_name_here**
+>#SBATCH -n 1 #tasks <br/>
+>#SBATCH -N 1 #nodes <br/>
+>#SBATCH -c #cores here <br/>
+>#SBATCH --mem=memory goes here ex: 127G <br/>
+>#SBATCH -o slurm_output-job_name.%J <br/>
+>#SBATCH -e slurm_error-job_name.%J <br/>
+>#SBATCH -p loko <br/>
+>#SBATCH -q qos <br/>
+>#SBATCH --mail-type=ALL <br/>
+>#SBATCH --mail-user=your_email@email_adress.com <br/>
+### Example for threaded:
+
+### Example for long:
+
+### Example for highmem:
+
+### Example for ultrahigh:
+
+
+
