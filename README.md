@@ -41,9 +41,9 @@ Check where your jobs are running:
 ## UAHPC Partitions:
 
 Useful commands if you know what you are doing:
->scontrol show partition 
->sacctmgr show qos 
->sinfo -N -l
+>scontrol show partition <br/>
+>sacctmgr show qos <br/>
+>sinfo -N -l <br/>
 
 Note that sinfo will show you the wrong memory for the partitions due to the nature of how nodes are distributed on UAHPC.
 
@@ -56,3 +56,12 @@ Note that sinfo will show you the wrong memory for the partitions due to the nat
 | loko            | 1      | 16     | 1TB                                           |
 | highmem         | 2      | 32     | 768 (Technically much more, depending on use) |
 | ultrahigh       | 3      | 142    | 3.072TB                                       |
+
+However it is a bit more nuanced: 
+If you use
+>sacctmgr show qos 
+
+You will see that THREADED has a MAXTRES of 16 which means that per job there are only 16 available cores however you can run up to four jobs in parrallel.
+16 Cores per Job. 
+
+As well you will see using 
