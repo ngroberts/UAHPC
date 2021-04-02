@@ -38,3 +38,21 @@ Check whats running for you:
 Check where your jobs are running:
 >squeue -u $USER -o "%i %Z"
 
+## UAHPC Partitions:
+
+Useful commands if you know what you are doing:
+>scontrol show partition 
+>sacctmgr show qos 
+>sinfo -N -l
+
+Note that sinfo will show you the wrong memory for the partitions due to the nature of how nodes are distributed on UAHPC.
+
+## Here is what you need to know:
+
+| Partition Name: | Nodes: | Cores: | Memory:                                       |
+|-----------------|--------|--------|-----------------------------------------------|
+| long            | 8      | 192    | 768GB                                         |
+| threaded        | 2      | 80     | 5376GB (Technically infinite)                 |
+| loko            | 1      | 16     | 1TB                                           |
+| highmem         | 2      | 32     | 768 (Technically much more, depending on use) |
+| ultrahigh       | 3      | 142    | 3.072TB                                       |
