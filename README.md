@@ -14,5 +14,12 @@ Check ownership of files in a folder:
 >drwxr-xr-x  4 ngroberts kmkocot 4096 Mar 14 15:44 2021-01-25_Assemblies <br/>
 >drwxr-xr-x  4 ngroberts users  135 Mar 29 13:51 2021-03-26-Orthofinder_gene_trees <br/>
 
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaIf a file is on users it both cannot be edited by kmkocot users and takes up memory thats not allocated to kmkocot.
+If a file is on users it both cannot be edited by kmkocot users and takes up memory thats not allocated to kmkocot.
+You need to change this with.
+>chgrp kmkocot FILENAME
 
+or recursively (a folder and all its contents with)
+>chrgrp -R kmkocot FOLDERNAME
+
+If you login and notice that files you create belong to users type:
+>newgrp - kmkocot 
