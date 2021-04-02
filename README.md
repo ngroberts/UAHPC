@@ -56,7 +56,7 @@ Note that sinfo will show you the wrong memory for the partitions due to the nat
 | long            | 8      | 192    | 768GB                                         | 7-00:00:00 |
 | threaded        | 2      | 80     | 5376GB (Technically infinite)                 | 48:00:00   |
 | loko            | 1      | 16     | 1TB                                           | Infinite   |
-| highmem         | 2      | 32     | 768 (Technically much more, depending on use) | Infinite   |
+| highmem         | 2      | 48     | 768 (Technically much more, depending on use) | Infinite   |
 | ultrahigh       | 3      | 142    | 3.072TB                                       | Infinite   |
 
 However it is a bit more nuanced: 
