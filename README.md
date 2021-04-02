@@ -1,6 +1,6 @@
-#Useful Commands for the Kmkocot Usergrp:
+# Useful Commands for the Kmkocot Usergrp:
 
-##Group ID and Group Ownership
+## Group ID and Group Ownership
 
 Check groups you belong to:
 >id -Gn
