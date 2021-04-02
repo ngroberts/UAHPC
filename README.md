@@ -151,9 +151,9 @@ This actually varies per partition and even per qos as some partitions do not ha
 
 ## Addtional SBATCH script options:
 >#SBATCH -t #Allows you to set a time limit for a job <br/>
->#SBATCH -test-only #Validates your batch script to see if it would run with the specified mem and cores or other options
->#SBATCH -x #exclude certain nodes from running the job (if certain past nodes have given problems)
->#SBATCH --mem-per-cpu= #Set the memory per cpu 
->#SBATCH --kill-on-invalid-dep #Kills the job if a dependency is invalid (often doesnt work but can stop a job from sitting idle
+>#SBATCH -test-only #Validates your batch script to see if it would run with the specified mem and cores or other options <br/>
+>#SBATCH -x #exclude certain nodes from running the job (if certain past nodes have given problems) <br/>
+>#SBATCH --mem-per-cpu= #Set the memory per cpu <br/>
+>#SBATCH --kill-on-invalid-dep #Kills the job if a dependency is invalid (often doesnt work but can stop a job from sitting idle <br/>
 
 
