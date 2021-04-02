@@ -4,7 +4,7 @@
 
 Check groups you belong to:
 >id -Gn
-
+HAHAH
 Check ownership of files in a folder:
 >ls -la
 
